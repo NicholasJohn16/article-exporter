@@ -1,8 +1,16 @@
 <?php 
+$template = KService::get('repos://site/templates.menu', array(
+        				'resources'         => 'templates_menu',
+        				'identity_property' => 'menuid'
+        		))->getQuery()->clientId(0)->fetchValue('template');
 
-$path    = $console->getHelperSet()->get('dialog')
-    ->ask($output, '<info>Enter the path to where you want to export articles to ? ', __DIR__.'/articles');
-
+$path    = WWW_ROOT.'/templates/'.$template.'/html/com_html/content';
+$dialog  = $console->getHelperSet()->get('dialog');
+if ( !$dialog->askConfirmation($output, '<info>Export articles into '.$template.' template ? (y\n) </info>') ) {
+    do {
+        $path = $dialog->ask($output, '<info>Enter the path to where you want to export articles to ? ');
+    } while( empty($path) );    
+}
 if ( !file_exists($path) )
 {
     if ( !mkdir($path, 0755) ) {
@@ -45,6 +53,7 @@ foreach($artilces->fetchSet() as $article)
             throw new \RuntimeException("Unable to create the directory $base");
         }
     }    
+    $output->writeLn('Exporting '.$article->title.'...');
     $title     = $article->title;
     $filename  = str_replace('-','_',$article->alias).'.php';
     $text      = $article->introtext;
