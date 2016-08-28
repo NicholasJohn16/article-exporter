@@ -18,6 +18,60 @@ if ( !file_exists($path) )
     }    
 }
 
+class ComContentsDomainEntityCategory extends AnDomainEntityDefault
+{
+    protected function _initialize(KConfig $config)
+    {
+        $config->append(array(
+            'attributes' => array(
+                'id' => array(
+                    'key' => true,
+                    'type' => 'integer',
+                    'read' => 'public',
+                )
+            )
+        ));
+
+        parent::_initialize($config);
+    }
+}
+
+class ComContentsDomainEntitySection extends AnDomainEntityDefault
+{
+    protected function _initialize(KConfig $config)
+    {
+        $config->append(array(
+            'attributes' => array(
+                'id' => array(
+                    'key' => true,
+                    'type' => 'integer',
+                    'read' => 'public',
+                )
+            )
+        ));
+
+        parent::_initialize($config);
+    }
+}
+
+class ComContentsDomainEntityArticle extends AnDomainEntityDefault
+{
+    protected function _initialize(KConfig $config)
+    {
+        $config->append(array(
+            'attributes' => array(
+                'id' => array(
+                    'key' => true,
+                    'type' => 'integer',
+                    'read' => 'public',
+                )
+            )
+        ));
+
+        parent::_initialize($config);
+    }
+}
+
 $cats = \KService::get('repos:contents.category', array(
         'resources' => 'categories'
 ));
