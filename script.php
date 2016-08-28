@@ -28,6 +28,9 @@ class ComContentsDomainEntityCategory extends AnDomainEntityDefault
                     'key' => true,
                     'type' => 'integer',
                     'read' => 'public',
+                ),
+                'alias' => array(
+                     'type' => 'string'
                 )
             )
         ));
@@ -46,6 +49,9 @@ class ComContentsDomainEntitySection extends AnDomainEntityDefault
                     'key' => true,
                     'type' => 'integer',
                     'read' => 'public',
+                ),
+                'alias' => array(
+                     'type' => 'string'
                 )
             )
         ));
@@ -64,7 +70,11 @@ class ComContentsDomainEntityArticle extends AnDomainEntityDefault
                     'key' => true,
                     'type' => 'integer',
                     'read' => 'public',
-                )
+                ),
+                'title',
+                'alias',
+                'introtext',
+                'fulltext'
             )
         ));
 
@@ -110,7 +120,7 @@ foreach($artilces->fetchSet() as $article)
     $output->writeLn('Exporting '.$article->title.'...');
     $title     = $article->title;
     $filename  = str_replace('-','_',$article->alias).'.php';
-    $text      = $article->introtext;
+    $text      = $article->introtext . $article->fulltext;
     $content   = <<<EOF
 <?php @title('$title') ?>
 $text
